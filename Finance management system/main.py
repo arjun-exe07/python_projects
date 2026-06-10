@@ -73,7 +73,7 @@ def getNewExpense(my_bud , my_exp):
     cat = input ("Enter the category :").strip()         
     amount = get_positive_float(f"Enter amount for {cat} :")         
     my_bud[cat] = my_bud.get(cat, 0.0) + amount 
-         
+
   #Enter actual expenses for same category     
   print("\nEnter your actual expense for same categories ::--")    
   for i in range(1, new_cat_count + 1):         
@@ -89,6 +89,7 @@ def displayBudgetAndExpenses(my_bud,my_exp):
   if not all_categories:         
     print("\nNo budget or expense categories available.")         
     return      
+  
   for category in all_categories:         
     budget = my_bud.get(category)         
     expense = my_exp.get(category)         
@@ -145,7 +146,8 @@ def report(my_bud , my_exp, income):
     
 
 
-def excel_report(my_bud , my_exp):     
+def excel_report(my_bud , my_exp):    
+
   remarks = {}
   all_categories = sorted(set(my_bud) | set(my_exp)) 
 
@@ -185,7 +187,7 @@ def excel_report(my_bud , my_exp):
       existing_df = pd.read_excel(file_name, sheet_name=sheet_name)              
       # Append new data             
       updated_df = pd.concat([existing_df, new_df], ignore_index=True)                          
-      book.save(file_name)             
+              
       # Write updated data             
       with pd.ExcelWriter(file_name,engine="openpyxl",mode="a", if_sheet_exists='replace') as writer:                 
         updated_df.to_excel(writer,sheet_name=sheet_name,index=False)          
