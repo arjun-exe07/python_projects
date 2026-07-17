@@ -4,7 +4,8 @@ import os
 from openpyxl import load_workbook 
 
 
-def get_positive_int(prompt, min_val=None):          
+def get_positive_int(prompt, min_val=None):    
+
   while True:         
     try:             
       val = int(input(prompt))             
@@ -17,7 +18,9 @@ def get_positive_int(prompt, min_val=None):
       
 
 
-def get_positive_float(prompt, min_val=None):          
+def get_positive_float(prompt, min_val=None):     
+
+
   while True:         
     try:             
       val = float(input(prompt))             
@@ -67,6 +70,7 @@ def getExpense(num) -> tuple[dict, dict]:
 #Combine getExpense and getNewExpense
 
 def getNewExpense(my_bud , my_exp):     
+
   new_cat_count = get_positive_int("Enter number of new categories you want to insert :", min_val=1)           
   print("\nEnter your Budget ::--")     
   for i in range(1, new_cat_count + 1):         
@@ -85,6 +89,7 @@ def getNewExpense(my_bud , my_exp):
 
 
 def displayBudgetAndExpenses(my_bud,my_exp):     
+
   all_categories = sorted(set(my_bud) | set(my_exp))     
   if not all_categories:         
     print("\nNo budget or expense categories available.")         
@@ -122,6 +127,7 @@ def displayBudgetAndExpenses(my_bud,my_exp):
 
 
 def report(my_bud , my_exp, income):     
+
   total_budget = sum(my_bud.values())     
   total_expenses = sum(my_exp.values())     
   total_income = sum(income.values()) if isinstance(income, dict) else float(income)     
@@ -146,7 +152,7 @@ def report(my_bud , my_exp, income):
     
 
 
-def excel_report(my_bud , my_exp):    
+def excel_report(my_bud , my_exp) -> None:    
 
   remarks = {}
   all_categories = sorted(set(my_bud) | set(my_exp)) 
@@ -205,6 +211,7 @@ def excel_report(my_bud , my_exp):
         
 #Main Program 
 def main() -> None :
+
   print("Personal Finance Management System")
   print("----------------------------------")
 
