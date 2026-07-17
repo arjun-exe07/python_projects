@@ -25,4 +25,4 @@ Follow the prompts to enter income, budget categories, and expenses.
 
 ## Excel Export
 
-If `pandas` and `openpyxl` are installed, the script can export a summary to `Finance management system\Data.xlsx`.
+If `pandas` and `openpyxl` are installed, the script can export a summary to `Finance management system\finance_report.xlsx`.
