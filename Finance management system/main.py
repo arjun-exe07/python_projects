@@ -1,39 +1,37 @@
-from datetime import datetime
+from datetime import datetime 
 from pathlib import Path
 
-import pandas as pd
-from openpyxl import load_workbook
+import pandas as pd 
+import os 
+from openpyxl import load_workbook 
 
 
-def get_positive_int(prompt, min_val=None):
-    while True:
-        try:
-            val = int(input(prompt))
-            if min_val is not None and val < min_val:
-                print(f"Value must be at least {min_val}.")
-                continue
-            if val <= 0:
-                print("Value must be positive.")
-                continue
-            return val
-        except ValueError:
-            print("Invalid input. Please enter a valid integer.")
+def get_positive_int(prompt, min_val=None):    
+
+  while True:         
+    try:             
+      val = int(input(prompt))             
+      if val <= 0:                 
+        print("Value must be positive.")                 
+        continue             
+      return val         
+    except ValueError:             
+      print("Invalid input. Please enter a valid integer.")  
       
 
 
-def get_positive_float(prompt, min_val=None):
-    while True:
-        try:
-            val = float(input(prompt))
-            if min_val is not None and val < min_val:
-                print(f"Value must be at least {min_val}.")
-                continue
-            if val <= 0:
-                print("Value must be positive.")
-                continue
-            return val
-        except ValueError:
-            print("Invalid input. Please enter a valid number.")
+def get_positive_float(prompt, min_val=None):     
+
+
+  while True:         
+    try:             
+      val = float(input(prompt))             
+      if val <= 0:                 
+        print("Value must be positive.")                 
+        continue                
+      return val         
+    except ValueError:             
+      print("Invalid input. Please enter a valid number.")  
       
       
 
@@ -171,10 +169,10 @@ def excel_report(my_bud , my_exp) -> None:
     else:             
       remarks[category] = "Congrats!!, You still have budget remaining"      
 
-  # Excel file name
-  file_name = Path(__file__).resolve().parent / "finance_report.xlsx"
+  # Excel file name     
+  file_name = Path(__file__).resolve().parent / "finance_report.xlsx"  
 
-  # Current month-year sheet name
+  # Current month-year sheet name   
   sheet_name = datetime.now().strftime("%B-%Y")
 
   info = {
