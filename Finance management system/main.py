@@ -1,35 +1,39 @@
-from datetime import datetime 
-import pandas as pd 
-import os 
-from openpyxl import load_workbook 
+from datetime import datetime
+from pathlib import Path
+
+import pandas as pd
+from openpyxl import load_workbook
 
 
-def get_positive_int(prompt, min_val=None):    
-
-  while True:         
-    try:             
-      val = int(input(prompt))             
-      if val <= 0:                 
-        print("Value must be positive.")                 
-        continue             
-      return val         
-    except ValueError:             
-      print("Invalid input. Please enter a valid integer.")  
+def get_positive_int(prompt, min_val=None):
+    while True:
+        try:
+            val = int(input(prompt))
+            if min_val is not None and val < min_val:
+                print(f"Value must be at least {min_val}.")
+                continue
+            if val <= 0:
+                print("Value must be positive.")
+                continue
+            return val
+        except ValueError:
+            print("Invalid input. Please enter a valid integer.")
       
 
 
-def get_positive_float(prompt, min_val=None):     
-
-
-  while True:         
-    try:             
-      val = float(input(prompt))             
-      if val <= 0:                 
-        print("Value must be positive.")                 
-        continue                
-      return val         
-    except ValueError:             
-      print("Invalid input. Please enter a valid number.")  
+def get_positive_float(prompt, min_val=None):
+    while True:
+        try:
+            val = float(input(prompt))
+            if min_val is not None and val < min_val:
+                print(f"Value must be at least {min_val}.")
+                continue
+            if val <= 0:
+                print("Value must be positive.")
+                continue
+            return val
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
       
       
 
@@ -167,10 +171,10 @@ def excel_report(my_bud , my_exp) -> None:
     else:             
       remarks[category] = "Congrats!!, You still have budget remaining"      
 
-  # Excel file name     
-  file_name = "Data.xlsx"  
+  # Excel file name
+  file_name = Path(__file__).resolve().parent / "finance_report.xlsx"
 
-  # Current month-year sheet name   
+  # Current month-year sheet name
   sheet_name = datetime.now().strftime("%B-%Y")
 
   info = {
@@ -182,10 +186,10 @@ def excel_report(my_bud , my_exp) -> None:
           }      
   # Convert to DataFrame     
   new_df = pd.DataFrame(info)      
-  # Check if file exists     
-  if os.path.exists(file_name):          
-    # Load workbook        
-    book = load_workbook(file_name)         
+  # Check if file exists
+  if file_name.exists():
+    # Load workbook
+    book = load_workbook(file_name)
      
     # Check if current month sheet exists         
     if sheet_name in book.sheetnames:              
@@ -201,16 +205,18 @@ def excel_report(my_bud , my_exp) -> None:
       # Create new month sheet             
       with pd.ExcelWriter(file_name,engine="openpyxl",mode="a") as writer:                 
         new_df.to_excel(writer,sheet_name=sheet_name,index=False)      
-  else:         
-    # Create new Excel file and first sheet         
-    with pd.ExcelWriter(file_name,engine="openpyxl") as writer:             
-      new_df.to_excel(writer,sheet_name=sheet_name,index=False)      
-  print("\n\nExcel Report ::--")     
-  print(new_df)     
-  print(f"Data added successfully in sheet: {sheet_name}")       
-        
-#Main Program 
-def main() -> None :
+  else:
+    # Create new Excel file and first sheet
+    with pd.ExcelWriter(file_name, engine="openpyxl") as writer:
+      new_df.to_excel(writer, sheet_name=sheet_name, index=False)
+
+  print("\n\nExcel Report ::--")
+  print(new_df)
+  print(f"Data added successfully in file: {file_name.name}, sheet: {sheet_name}")
+
+
+# Main Program
+def main() -> None:
 
   print("Personal Finance Management System")
   print("----------------------------------")
@@ -241,9 +247,12 @@ def main() -> None :
     elif ch == 4:         
       excel_report(my_budget , my_expense)      
     
-    elif ch == 5 :         
-      print("Thanks for using our finance monitoring system.")         
-      break      
-    else :         
-      print("Invalid choice. \nPlease choice again")         
-      
+    elif ch == 5 :
+      print("Thanks for using our finance monitoring system.")
+      break
+    else :
+      print("Invalid choice. \nPlease choose again")
+
+
+if __name__ == "__main__":
+    main()
