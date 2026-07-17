@@ -2,7 +2,7 @@ from datetime import datetime
 from pathlib import Path
 
 import pandas as pd 
-import os 
+
 from openpyxl import load_workbook 
 
 
@@ -71,22 +71,43 @@ def getExpense(num) -> tuple[dict, dict]:
 
 #Combine getExpense and getNewExpense
 
-def getNewExpense(my_bud , my_exp):     
+def getNewExpense(my_bud, my_exp):
 
-  new_cat_count = get_positive_int("Enter number of new categories you want to insert :", min_val=1)           
-  print("\nEnter your Budget ::--")     
-  for i in range(1, new_cat_count + 1):         
-    cat = input ("Enter the category :").strip()         
-    amount = get_positive_float(f"Enter amount for {cat} :")         
-    my_bud[cat] = my_bud.get(cat, 0.0) + amount 
+    new_cat_count = get_positive_int(
+        "Enter number of new categories you want to insert: ",
+        min_val=1
+    )
 
-  #Enter actual expenses for same category     
-  print("\nEnter your actual expense for same categories ::--")    
-  for i in range(1, new_cat_count + 1):         
-    cat = input ("Enter the category :").strip()         
-    amount = get_positive_float(f"Enter amount for {cat} :")         
-    my_exp[cat] = my_exp.get(cat, 0.0) + amount  
-  return my_bud, my_exp
+    new_categories = []
+
+    print("\nEnter your Budget ::--")
+
+    for i in range(1, new_cat_count + 1):
+        while True:
+            cat = input(f"Enter category #{i}: ").strip().title()
+
+            if cat:
+                break
+
+            print("Category name cannot be empty.")
+
+        amount = get_positive_float(
+            f"Enter budget amount for {cat}: "
+        )
+
+        my_bud[cat] = my_bud.get(cat, 0.0) + amount
+        new_categories.append(cat)
+
+    print("\nEnter your actual expenses for the same categories ::--")
+
+    for cat in new_categories:
+        amount = get_positive_float(
+            f"Enter expense amount for {cat}: "
+        )
+
+        my_exp[cat] = my_exp.get(cat, 0.0) + amount
+
+    return my_bud, my_exp
       
 
 
