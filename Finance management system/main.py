@@ -45,7 +45,7 @@ def getIncome():
   
 
 
-def getExpense(num):     
+def getExpense(num) -> tuple[dict, dict]:     
   my_bud = {}
   my_exp = {}
 
